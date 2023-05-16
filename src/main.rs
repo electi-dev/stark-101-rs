@@ -1,12 +1,10 @@
-mod modules;
-
-use crate::{
-    modules::field::FieldElement,
-    modules::polynomial::Polynomial,
-    modules::channel::Channel,
-    modules::merkle::{MerkleTree},
-    modules::merkle::verify_decommitment, 
-    modules::list_utils,
+use zkp_libs::{
+    math::field::FieldElement,
+    math::polynomial::Polynomial,
+    starks::channel::Channel,
+    starks::merkle::{MerkleTree},
+    starks::merkle::verify_decommitment, 
+    utils::list,
 };
 
 use rand::random;
@@ -155,7 +153,7 @@ fn part_2() -> (
     .map(|i| Polynomial::new(&vec![-g.pow(i), FieldElement::one()], 'x'))
     .collect::<Vec<Polynomial>>();
     
-    let prod = list_utils::prod(&prod_vec);
+    let prod = list::prod(&prod_vec);
     assert_eq!(prod.repr_latex(), "$3221225472 +x^{1024}$");
 
     let numer2 = f.compose(&(Polynomial::new(&vec![FieldElement::zero(), FieldElement::from(g.pow(2))], 'x'))) -
